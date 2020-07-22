@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from .models import Profile
-# from website.models import NewsLetter, Contact
+from website.models import NewsLetter, Contact
 # from blog.models import Comment
 from django import forms
 from django.contrib.auth.models import User
@@ -55,24 +55,30 @@ class CreateUser(UserCreationForm):
         # A user was found with this as a username, raise an error.
         raise forms.ValidationError('This username  is already in use. Try another')
         
-# class NewsletterForm(forms.Form, ModelForm):
-#     class Meta:
-#         model = NewsLetter
-#         fields = ['email']
+class NewsletterForm(forms.Form, ModelForm):
+    email = forms.EmailInput(attrs={
+        'placeholder': "Email",
+        
+    }
+        
+    )
+    class Meta:
+        model = NewsLetter
+        fields = ['email']
     
-#     def clean_email(self):
-#         # Get the email
-#         email = self.cleaned_data.get('email')
+    def clean_email(self):
+        # Get the email
+        email = self.cleaned_data.get('email')
 
-#         # Check to see if any users already exist with this email as a username.
-#         try:
-#             match = NewsLetter.objects.get(email=email)
-#         except NewsLetter.DoesNotExist:
-#             # Unable to find a user, this is fine
-#             return email
+        # Check to see if any users already exist with this email as a username.
+        try:
+            match = NewsLetter.objects.get(email=email)
+        except NewsLetter.DoesNotExist:
+            # Unable to find a user, this is fine
+            return email
 
-#         # A user was found with this as a username, raise an error.
-#         raise forms.ValidationError('This email address is already in use.')
+        # A user was found with this as a username, raise an error.
+        raise forms.ValidationError('This email address is already in use.')
 
 
 # class CommentForm(ModelForm):

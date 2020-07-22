@@ -96,8 +96,9 @@
 					<h6>subscribe</h6>
 					<p>Subscribe us and you won't miss the new arrivals, as well as discounts and sales.</p>
 					<form class="subscribe-form">
+						{% csrf_token %}
 						<i class="fa fa-at" aria-hidden="true"></i>
-						<input class="inp-form" type="email" name="subscribe" placeholder="E-mail">
+						{{n_form.as_p}}
 						<button type="submit" class="btn btn-form"><span>send</span></button>
 					</form>
 				</div>
@@ -162,5 +163,6 @@
     {% endblock script%}
 
 	<script src="{% static 'assets/js/scripts.js' %}"></script>
+	
 </body>
 </html>
